@@ -2,12 +2,12 @@
 using CountersPlus.Counters.Interfaces;
 using TMPro;
 using UnityEngine;
-using YokoNotesYurusenaiCounter.Configuration;
-using YokoNotesYurusenaiCounter.Interfaces;
+using YokoNotesTokaYurusenaiCounter.Configuration;
+using YokoNotesTokaYurusenaiCounter.Interfaces;
 
-namespace YokoNotesYurusenaiCounter
+namespace YokoNotesTokaYurusenaiCounter
 {
-    public class YokoNotesYurusenaiCounter : BasicCustomCounter, INoteEventHandler
+    public class YokoNotesTokaYurusenaiCounter : BasicCustomCounter, INoteEventHandler
     {
         private readonly Vector3 labelOffset;
 
@@ -17,25 +17,25 @@ namespace YokoNotesYurusenaiCounter
         private readonly int defaultBombCount = 0;
 
         private readonly IYurusenai defaultYurusenaiNoteMiss;
-        private readonly IYurusenai defaultYurusenaiBomb;
+        private readonly IYurusenai defaultYurusenaiBombSlash;
 
         private IYurusenai updatedYurusenaiNoteMiss;
-        private IYurusenai updatedYurusenaiBomb;
+        private IYurusenai updatedYurusenaiBombSlash;
         
-        public YokoNotesYurusenaiCounter()
+        public YokoNotesTokaYurusenaiCounter()
         {
             labelOffset = new Vector3(
                 PluginConfig.Instance.OffsetX, PluginConfig.Instance.OffsetY, PluginConfig.Instance.OffsetZ
                 );
 
             defaultYurusenaiNoteMiss = new YurusenaiNoteMiss(defaultNoteCount, defaultNoteCount, defaultNoteCount);
-            defaultYurusenaiBomb = new YurusenaiBomb(defaultBombCount, defaultBombCount, defaultBombCount);
+            defaultYurusenaiBombSlash = new YurusenaiBombSlash(defaultBombCount, defaultBombCount, defaultBombCount);
         }
         
         public override void CounterInit()
         {
             updatedYurusenaiNoteMiss = defaultYurusenaiNoteMiss;
-            updatedYurusenaiBomb = defaultYurusenaiBomb;
+            updatedYurusenaiBombSlash = defaultYurusenaiBombSlash;
             
             CreateLabel();
             CreateCounter();
@@ -47,7 +47,7 @@ namespace YokoNotesYurusenaiCounter
             if (IsNoteBomb(data))
             {
                 if (PluginConfig.Instance.CounterType == CounterTypeEnum.YokoNotesOnly) return;
-                UpdateYurusenai(ref updatedYurusenaiBomb,info);
+                UpdateYurusenai(ref updatedYurusenaiBombSlash,info);
 
                 UpdateText();
 
@@ -131,11 +131,11 @@ namespace YokoNotesYurusenaiCounter
             {
                 case CounterTypeEnum.Both:
                     return $"{YurusenaiText(updatedYurusenaiNoteMiss, PluginConfig.Instance.YokoNoteMissIcon)}" +
-                        $"\n{YurusenaiText(updatedYurusenaiBomb, PluginConfig.Instance.BombSlashIcon)}";
+                        $"\n{YurusenaiText(updatedYurusenaiBombSlash, PluginConfig.Instance.BombSlashIcon)}";
                 case CounterTypeEnum.YokoNotesOnly:
                     return YurusenaiText(updatedYurusenaiNoteMiss, PluginConfig.Instance.YokoNoteMissIcon);
                 default:
-                    return YurusenaiText(updatedYurusenaiBomb, PluginConfig.Instance.BombSlashIcon);
+                    return YurusenaiText(updatedYurusenaiBombSlash, PluginConfig.Instance.BombSlashIcon);
             }
         }
 

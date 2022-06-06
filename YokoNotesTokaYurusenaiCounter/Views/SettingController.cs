@@ -5,9 +5,9 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using YokoNotesYurusenaiCounter.Configuration;
+using YokoNotesTokaYurusenaiCounter.Configuration;
 
-namespace YokoNotesYurusenaiCounter.Views
+namespace YokoNotesTokaYurusenaiCounter.Views
 {
     // MonoBehaviourは使えない
     public class SettingController

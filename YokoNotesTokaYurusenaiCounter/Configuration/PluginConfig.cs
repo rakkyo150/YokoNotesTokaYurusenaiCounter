@@ -2,7 +2,7 @@
 using IPA.Config.Stores;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
-namespace YokoNotesYurusenaiCounter.Configuration
+namespace YokoNotesTokaYurusenaiCounter.Configuration
 {
     public class PluginConfig
     {

@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using YokoNotesYurusenaiCounter.Configuration;
+using YokoNotesTokaYurusenaiCounter.Configuration;
 using IPALogger = IPA.Logging.Logger;
 
-namespace YokoNotesYurusenaiCounter
+namespace YokoNotesTokaYurusenaiCounter
 {
     [Plugin(RuntimeOptions.SingleStartInit)]
     public class Plugin

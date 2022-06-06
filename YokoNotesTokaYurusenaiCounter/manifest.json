@@ -1,0 +1,31 @@
+﻿{
+    "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
+    "id": "YokoNotesTokaYurusenaiCounter",
+    "name": "YokoNotesTokaYurusenaiCounter",
+    "author": "Rakkyo",
+    "version": "1.0.0",
+    "description": "Yoko Notes Toka Yurusenai",
+    "gameVersion": "1.22.0",
+    "dependsOn": {
+        "Counters+": "^2.2.1",
+        "BeatSaberMarkupLanguage": "^1.5.3",
+        "BSIPA": "^4.1.6"
+    },
+    "features": {
+        "CountersPlus.CustomCounter": {
+            "Name": "Yoko Notes Toka Yurusenai Counter",
+            "Description": "Shows the Miss Count on Horizon Direction Notes or Bomb Slash",
+            "CounterLocation": "YokoNotesTokaYurusenaiCounter.YokoNotesTokaYurusenaiCounter",
+            "ConfigDefaults": {
+                "Enabled": true,
+                "Position": "AboveCombo",
+                "Distance": 0
+            },
+            "BSML": {
+                "Resource": "YokoNotesTokaYurusenaiCounter.Views.Setting.bsml",
+                "Host": "YokoNotesTokaYurusenaiCounter.Views.SettingController",
+                "Icon": "YokoNotesTokaYurusenaiCounter.Images.yoko.png"
+            }
+        }
+    }
+}
