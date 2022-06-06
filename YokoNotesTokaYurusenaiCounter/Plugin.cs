@@ -1,12 +1,6 @@
 ﻿using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using YokoNotesTokaYurusenaiCounter.Configuration;
 using IPALogger = IPA.Logging.Logger;
 
@@ -24,7 +18,7 @@ namespace YokoNotesTokaYurusenaiCounter
         /// [Init] methods that use a Constructor or called before regular methods like InitWithConfig.
         /// Only use [Init] with one Constructor.
         /// </summary>
-        public void Init(IPALogger logger,Config config)
+        public void Init(IPALogger logger, Config config)
         {
             Instance = this;
             Log = logger;

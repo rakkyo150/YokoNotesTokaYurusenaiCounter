@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YokoNotesTokaYurusenaiCounter.Interfaces;
+﻿using YokoNotesTokaYurusenaiCounter.Interfaces;
 
 namespace YokoNotesTokaYurusenaiCounter
 {
     internal class YurusenaiNoteMiss : IYurusenai
     {
         readonly private int bothCount;
-        public int BothCount() => bothCount; 
+        public int BothCount() => bothCount;
 
         readonly private int leftCount;
-        public int LeftCount() => leftCount; 
+        public int LeftCount() => leftCount;
 
         readonly private int rightCount;
-        public int RightCount() => rightCount; 
+        public int RightCount() => rightCount;
 
         internal YurusenaiNoteMiss(int both, int left, int right)
         {
@@ -35,17 +30,17 @@ namespace YokoNotesTokaYurusenaiCounter
 
         public IYurusenai UpdateBothHand()
         {
-            return new YurusenaiNoteMiss(bothCount+1, leftCount, rightCount);
+            return new YurusenaiNoteMiss(bothCount + 1, leftCount, rightCount);
         }
 
         public IYurusenai UpdateLeftHand()
         {
-            return new YurusenaiNoteMiss(bothCount, leftCount+1, rightCount);
+            return new YurusenaiNoteMiss(bothCount, leftCount + 1, rightCount);
         }
 
         public IYurusenai UpdateRightHand()
         {
-            return new YurusenaiNoteMiss(bothCount, leftCount, rightCount+1);
+            return new YurusenaiNoteMiss(bothCount, leftCount, rightCount + 1);
         }
     }
 }

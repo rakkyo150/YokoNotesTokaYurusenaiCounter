@@ -21,7 +21,7 @@ namespace YokoNotesTokaYurusenaiCounter
 
         private IYurusenai updatedYurusenaiNoteMiss;
         private IYurusenai updatedYurusenaiBombSlash;
-        
+
         public YokoNotesTokaYurusenaiCounter()
         {
             labelOffset = new Vector3(
@@ -31,23 +31,23 @@ namespace YokoNotesTokaYurusenaiCounter
             defaultYurusenaiNoteMiss = new YurusenaiNoteMiss(defaultNoteCount, defaultNoteCount, defaultNoteCount);
             defaultYurusenaiBombSlash = new YurusenaiBombSlash(defaultBombCount, defaultBombCount, defaultBombCount);
         }
-        
+
         public override void CounterInit()
         {
             updatedYurusenaiNoteMiss = defaultYurusenaiNoteMiss;
             updatedYurusenaiBombSlash = defaultYurusenaiBombSlash;
-            
+
             CreateLabel();
             CreateCounter();
         }
-        
+
 
         public void OnNoteCut(NoteData data, NoteCutInfo info)
         {
             if (IsNoteBomb(data))
             {
                 if (PluginConfig.Instance.CounterType == CounterTypeEnum.YokoNotesOnly) return;
-                UpdateYurusenai(ref updatedYurusenaiBombSlash,info);
+                UpdateYurusenai(ref updatedYurusenaiBombSlash, info);
 
                 UpdateText();
 
@@ -55,7 +55,7 @@ namespace YokoNotesTokaYurusenaiCounter
             }
 
             if (PluginConfig.Instance.CounterType == CounterTypeEnum.BombsOnly) return;
-            
+
             if (!IsNoteYoko(data)) return;
 
             if (info.allIsOK) return;
@@ -80,17 +80,17 @@ namespace YokoNotesTokaYurusenaiCounter
         {
             yurusenai = yurusenai.UpdateBothHand();
 
-            if (data.colorType==ColorType.ColorA)
+            if (data.colorType == ColorType.ColorA)
             {
                 yurusenai = yurusenai.UpdateLeftHand();
             }
-            else if(data.colorType==ColorType.ColorB)
+            else if (data.colorType == ColorType.ColorB)
             {
                 yurusenai = yurusenai.UpdateRightHand();
             }
         }
 
-        private void UpdateYurusenai(ref IYurusenai yurusenai,NoteCutInfo info)
+        private void UpdateYurusenai(ref IYurusenai yurusenai, NoteCutInfo info)
         {
             yurusenai = yurusenai.UpdateBothHand();
 
@@ -123,7 +123,7 @@ namespace YokoNotesTokaYurusenaiCounter
             counter.alignment = counterAlign;
         }
 
-        private void UpdateText()=> counter.text = MakeCountText();
+        private void UpdateText() => counter.text = MakeCountText();
 
         private string MakeCountText()
         {
@@ -139,7 +139,7 @@ namespace YokoNotesTokaYurusenaiCounter
             }
         }
 
-        private string YurusenaiText(IYurusenai yurusenai,string icon)
+        private string YurusenaiText(IYurusenai yurusenai, string icon)
         {
             if (PluginConfig.Instance.IsIconEnable)
             {
