@@ -1,6 +1,7 @@
 # YokoNotesYurusenaiCounter
-横ノーツでミスした回数を表示します。<br>
+横ノーツでミスした回数やボムを切った回数を表示します。<br>
 Counters+が必要です。<br>
+![yurusenai](https://user-images.githubusercontent.com/86054813/172263444-a076ca25-ca5e-4d12-acaf-5b994c91d0c9.png)
 
 ## 設定項目
 |項目|説明|
