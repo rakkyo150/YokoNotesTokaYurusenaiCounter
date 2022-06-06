@@ -1,0 +1,5 @@
+﻿<vertical xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd' spacing='1' horizontal-fit='PreferredSize' vertical-fit='PreferredSize'>
+	<increment-setting text="Offset X" value="OffsetX"  increment="0.1" apply-on-change="true"></increment-setting>
+	<increment-setting text="Offset Y" value="OffsetY"  increment="0.1" apply-on-change="true"></increment-setting>
+	<increment-setting text="Offset Z" value="OffsetZ"  increment="0.1" apply-on-change="true"></increment-setting>
+</vertical>
