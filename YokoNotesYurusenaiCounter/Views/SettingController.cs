@@ -4,6 +4,7 @@ using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using YokoNotesYurusenaiCounter.Configuration;
 
 namespace YokoNotesYurusenaiCounter.Views
@@ -11,6 +12,39 @@ namespace YokoNotesYurusenaiCounter.Views
     // MonoBehaviourは使えない
     public class SettingController
     {
+        [UIValue("IsLabelEnable")]
+        public bool IsLabelEnable
+        {
+            get => PluginConfig.Instance.IsLabelEnable;
+            set
+            {
+                PluginConfig.Instance.IsLabelEnable = value;
+            }
+        }
+
+        [UIValue("CounterType")]
+        public string CounterType
+        {
+            get => PluginConfig.Instance.CounterType.ToString();
+            set
+            {
+                SetCounterType(value);
+            }
+        }
+
+        [UIValue("type")]
+        public List<object> type = Enum.GetNames(typeof(CounterTypeEnum)).ToList<object>();
+
+        [UIValue("SeparateSaber")]
+        public bool SeparateSaber
+        {
+            get => PluginConfig.Instance.SeparateSaber;
+            set
+            {
+                PluginConfig.Instance.SeparateSaber = value;
+            }
+        }
+
         [UIValue("OffsetX")]
         public float OffsetX
         {
@@ -39,6 +73,17 @@ namespace YokoNotesYurusenaiCounter.Views
             {
                 PluginConfig.Instance.OffsetZ = value;
             }
+        }
+
+        private static void SetCounterType(string value)
+        {
+            if (Enum.TryParse(value, out CounterTypeEnum result))
+            {
+                PluginConfig.Instance.CounterType = result;
+                return;
+            }
+
+            PluginConfig.Instance.CounterType = CounterTypeEnum.Both;
         }
     }
 }
