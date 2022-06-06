@@ -22,6 +22,16 @@ namespace YokoNotesYurusenaiCounter.Views
             }
         }
 
+        [UIValue("IsIconEnable")]
+        public bool IsIconEnable
+        {
+            get => PluginConfig.Instance.IsIconEnable;
+            set
+            {
+                PluginConfig.Instance.IsIconEnable = value;
+            }
+        }
+
         [UIValue("CounterType")]
         public string CounterType
         {

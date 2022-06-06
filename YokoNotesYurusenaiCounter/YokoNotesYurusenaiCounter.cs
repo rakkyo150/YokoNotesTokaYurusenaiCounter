@@ -130,22 +130,33 @@ namespace YokoNotesYurusenaiCounter
             switch (PluginConfig.Instance.CounterType)
             {
                 case CounterTypeEnum.Both:
-                    return $"{YurusenaiText(updatedYurusenaiNoteMiss, "🤔")}\n{YurusenaiText(updatedYurusenaiBomb, "💣")}";
+                    return $"{YurusenaiText(updatedYurusenaiNoteMiss, PluginConfig.Instance.YokoNoteMissIcon)}" +
+                        $"\n{YurusenaiText(updatedYurusenaiBomb, PluginConfig.Instance.BombSlashIcon)}";
                 case CounterTypeEnum.YokoNotesOnly:
-                    return YurusenaiText(updatedYurusenaiNoteMiss, "🤔");
+                    return YurusenaiText(updatedYurusenaiNoteMiss, PluginConfig.Instance.YokoNoteMissIcon);
                 default:
-                    return YurusenaiText(updatedYurusenaiBomb, "💣");
+                    return YurusenaiText(updatedYurusenaiBomb, PluginConfig.Instance.BombSlashIcon);
             }
         }
 
         private string YurusenaiText(IYurusenai yurusenai,string icon)
         {
-            if (PluginConfig.Instance.SeparateSaber)
+            if (PluginConfig.Instance.IsIconEnable)
             {
-                return $"{icon}  {yurusenai.LeftCount()}  {yurusenai.RightCount()}";
+                if (PluginConfig.Instance.SeparateSaber)
+                {
+                    return $"{icon}  {yurusenai.LeftCount()}  {yurusenai.RightCount()}";
+                }
+
+                return $"{icon} {yurusenai.BothCount()}";
             }
 
-            return $"{icon} {yurusenai.BothCount()}";
+            if (PluginConfig.Instance.SeparateSaber)
+            {
+                return $"{yurusenai.LeftCount()}  {yurusenai.RightCount()}";
+            }
+
+            return $"{yurusenai.BothCount()}";
         }
 
         private static bool IsNoteYoko(NoteData data)
