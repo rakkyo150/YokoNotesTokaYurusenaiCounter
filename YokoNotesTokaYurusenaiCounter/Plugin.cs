@@ -23,7 +23,7 @@ namespace YokoNotesTokaYurusenaiCounter
             Instance = this;
             Log = logger;
             PluginConfig.Instance = config.Generated<PluginConfig>();
-            Log.Info("YokoNotesYurusenaiCounter initialized.");
+            Log.Info("YokoNotesTokaYurusenaiCounter initialized.");
         }
 
         #region BSIPA Config
