@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using YokoNotesTokaYurusenaiCounter.Configuration;
 using Zenject;
 
 namespace YokoNotesTokaYurusenaiCounter.UI
@@ -37,8 +38,15 @@ namespace YokoNotesTokaYurusenaiCounter.UI
         public void SetTMPTransform(Transform tMPTransform)
         {
             yokoNote.transform.SetParent(tMPTransform, false);
-            yokoNote.transform.position = yokoNote.transform.position + (Vector3.left * 0.3f);
             yokoNote.transform.position = yokoNote.transform.position + (Vector3.down * 0.15f) ;
+
+            if (PluginConfig.Instance.SeparateSaber)
+            {
+                yokoNote.transform.position = yokoNote.transform.position + (Vector3.left * 0.3f);
+                return;
+            }
+
+            yokoNote.transform.position = yokoNote.transform.position + (Vector3.left * 0.15f);
         }
 
         public void MoveLeft()

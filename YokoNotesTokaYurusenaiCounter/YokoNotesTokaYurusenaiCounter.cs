@@ -60,14 +60,21 @@ namespace YokoNotesTokaYurusenaiCounter
 
             updatedNumberOfDigitForNoteImage = initialNumberOfDigitForNoteImage;
 
-            // MonoBehaviourを継承しているのでInstantiateする必要がある
-            _imageViewSetter = _container.InstantiateComponentOnNewGameObject<ImageViewSetter>("yokoNoteImageView");
-            _imageViewSetter.Initialize();
+            if (!IsYokoNoteIconDisabled())
+            {
+                // MonoBehaviourを継承しているのでInstantiateする必要がある
+                _imageViewSetter = _container.InstantiateComponentOnNewGameObject<ImageViewSetter>("yokoNoteImageView");
+                _imageViewSetter?.Initialize();
+            }
 
             CreateLabel();
             CreateCounter();
         }
 
+        private static bool IsYokoNoteIconDisabled()
+        {
+            return !PluginConfig.Instance.IsIconEnable || PluginConfig.Instance.CounterType == CounterTypeEnum.BombsOnly;
+        }
 
         public void OnNoteCut(NoteData data, NoteCutInfo info)
         {
@@ -91,6 +98,7 @@ namespace YokoNotesTokaYurusenaiCounter
 
             UpdateText();
 
+            if (IsYokoNoteIconDisabled()) return;           
             ConfirmNumberOfDigit();
         }
 
@@ -102,6 +110,7 @@ namespace YokoNotesTokaYurusenaiCounter
 
             UpdateText();
 
+            if(IsYokoNoteIconDisabled()) return;          
             ConfirmNumberOfDigit();
         }
 
@@ -109,7 +118,7 @@ namespace YokoNotesTokaYurusenaiCounter
         {
             int newNumberOfDigit;
             int numberOfMove;
-
+            
             if (PluginConfig.Instance.SeparateSaber)
             {
                 newNumberOfDigit = (int)Math.Log10(updatedYurusenaiNoteMiss.LeftCount()) + (int)Math.Log10(updatedYurusenaiNoteMiss.RightCount()) + 2;
@@ -179,7 +188,8 @@ namespace YokoNotesTokaYurusenaiCounter
             counter.text = MakeCountText();
             counter.alignment = counterAlign;
 
-            _imageViewSetter.SetTMPTransform(counter.transform);
+            if (IsYokoNoteIconDisabled()) return;
+            _imageViewSetter?.SetTMPTransform(counter.transform);
         }
 
         private void UpdateText() => counter.text = MakeCountText();
