@@ -48,5 +48,11 @@ namespace YokoNotesTokaYurusenaiCounter.UI
         {
             yokoNote.transform.position = yokoNote.transform.position + (Vector3.left * 0.05f);
         }
+
+        public void OnDestroy()
+        {
+            // いらないはずだけど一応
+            _assetLoader = null;
+        }
     }
 }
