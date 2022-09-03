@@ -5,7 +5,7 @@
     "author": "Rakkyo",
     "version": "1.2.0",
     "description": "Yoko Notes Toka Yurusenai",
-    "gameVersion": "1.23.0",
+    "gameVersion": "1.24.0",
     "dependsOn": {
         "Counters+": "^2.2.1",
         "BeatSaberMarkupLanguage": "^1.5.3",
