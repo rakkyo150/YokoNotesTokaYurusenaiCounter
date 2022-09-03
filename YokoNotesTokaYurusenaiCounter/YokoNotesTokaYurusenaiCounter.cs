@@ -1,14 +1,21 @@
 ﻿using CountersPlus.Counters.Custom;
 using CountersPlus.Counters.Interfaces;
+using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using YokoNotesTokaYurusenaiCounter.Configuration;
 using YokoNotesTokaYurusenaiCounter.Interfaces;
+using YokoNotesTokaYurusenaiCounter.UI;
+using Zenject;
 
 namespace YokoNotesTokaYurusenaiCounter
 {
     public class YokoNotesTokaYurusenaiCounter : BasicCustomCounter, INoteEventHandler
     {
+        private ImageViewSetter _imageViewSetter;
+        private readonly DiContainer _container;
+        
         private readonly Vector3 labelOffset;
 
         private TMP_Text counter;
@@ -16,26 +23,46 @@ namespace YokoNotesTokaYurusenaiCounter
         private readonly int defaultNoteCount = 0;
         private readonly int defaultBombCount = 0;
 
-        private readonly IYurusenai defaultYurusenaiNoteMiss;
-        private readonly IYurusenai defaultYurusenaiBombSlash;
+        private readonly IYurusenai InitializedYurusenaiNoteMiss;
+        private readonly IYurusenai InitializedYurusenaiBombSlash;
 
         private IYurusenai updatedYurusenaiNoteMiss;
         private IYurusenai updatedYurusenaiBombSlash;
 
-        public YokoNotesTokaYurusenaiCounter()
+        private readonly int initialNumberOfDigitForNoteImage;
+        private int updatedNumberOfDigitForNoteImage;
+
+        public YokoNotesTokaYurusenaiCounter(DiContainer diContainer)
         {
+            _container = diContainer;
+            
             labelOffset = new Vector3(
                 PluginConfig.Instance.OffsetX, PluginConfig.Instance.OffsetY, PluginConfig.Instance.OffsetZ
                 );
 
-            defaultYurusenaiNoteMiss = new YurusenaiNoteMiss(defaultNoteCount, defaultNoteCount, defaultNoteCount);
-            defaultYurusenaiBombSlash = new YurusenaiBombSlash(defaultBombCount, defaultBombCount, defaultBombCount);
+            InitializedYurusenaiNoteMiss = new YurusenaiNoteMiss(defaultNoteCount, defaultNoteCount, defaultNoteCount);
+            InitializedYurusenaiBombSlash = new YurusenaiBombSlash(defaultBombCount, defaultBombCount, defaultBombCount);
+
+            if (PluginConfig.Instance.SeparateSaber)
+            {
+                initialNumberOfDigitForNoteImage = 2;
+            }
+            else
+            {
+                initialNumberOfDigitForNoteImage = 1;
+            }
         }
 
         public override void CounterInit()
         {
-            updatedYurusenaiNoteMiss = defaultYurusenaiNoteMiss;
-            updatedYurusenaiBombSlash = defaultYurusenaiBombSlash;
+            updatedYurusenaiNoteMiss = InitializedYurusenaiNoteMiss;
+            updatedYurusenaiBombSlash = InitializedYurusenaiBombSlash;
+
+            updatedNumberOfDigitForNoteImage = initialNumberOfDigitForNoteImage;
+
+            // MonoBehaviourを継承しているのでInstantiateする必要がある
+            _imageViewSetter = _container.InstantiateComponentOnNewGameObject<ImageViewSetter>("yokoNoteImageView");
+            _imageViewSetter.Initialize();
 
             CreateLabel();
             CreateCounter();
@@ -63,6 +90,8 @@ namespace YokoNotesTokaYurusenaiCounter
             UpdateYurusenai(ref updatedYurusenaiNoteMiss, info);
 
             UpdateText();
+
+            ConfirmNumberOfDigit();
         }
 
         public void OnNoteMiss(NoteData data)
@@ -72,6 +101,34 @@ namespace YokoNotesTokaYurusenaiCounter
             UpdateYurusenai(ref updatedYurusenaiNoteMiss, data);
 
             UpdateText();
+
+            ConfirmNumberOfDigit();
+        }
+
+        private void ConfirmNumberOfDigit()
+        {
+            int newNumberOfDigit;
+            int numberOfMove;
+
+            if (PluginConfig.Instance.SeparateSaber)
+            {
+                newNumberOfDigit = (int)Math.Log10(updatedYurusenaiNoteMiss.LeftCount()) + (int)Math.Log10(updatedYurusenaiNoteMiss.RightCount()) + 2;
+            }
+            else
+            {
+                newNumberOfDigit = (int)Math.Log10(updatedYurusenaiNoteMiss.BothCount()) + 1;
+            }
+
+            if (updatedNumberOfDigitForNoteImage >= newNumberOfDigit) return;
+
+            numberOfMove = newNumberOfDigit - updatedNumberOfDigitForNoteImage;
+            
+            foreach (var _ in Enumerable.Range(1, numberOfMove))
+            {
+                _imageViewSetter.MoveLeft();
+            }
+            
+            updatedNumberOfDigitForNoteImage = newNumberOfDigit;
         }
 
         public override void CounterDestroy() { }
@@ -121,6 +178,8 @@ namespace YokoNotesTokaYurusenaiCounter
             counter.fontSize = 4f;
             counter.text = MakeCountText();
             counter.alignment = counterAlign;
+
+            _imageViewSetter.SetTMPTransform(counter.transform);
         }
 
         private void UpdateText() => counter.text = MakeCountText();
@@ -130,10 +189,10 @@ namespace YokoNotesTokaYurusenaiCounter
             switch (PluginConfig.Instance.CounterType)
             {
                 case CounterTypeEnum.Both:
-                    return $"{YurusenaiText(updatedYurusenaiNoteMiss, PluginConfig.Instance.YokoNoteMissIcon)}" +
+                    return $"{YurusenaiText(updatedYurusenaiNoteMiss, "      ")}" +
                         $"\n{YurusenaiText(updatedYurusenaiBombSlash, PluginConfig.Instance.BombSlashIcon)}";
                 case CounterTypeEnum.YokoNotesOnly:
-                    return YurusenaiText(updatedYurusenaiNoteMiss, PluginConfig.Instance.YokoNoteMissIcon);
+                    return YurusenaiText(updatedYurusenaiNoteMiss, "      ");
                 default:
                     return YurusenaiText(updatedYurusenaiBombSlash, PluginConfig.Instance.BombSlashIcon);
             }

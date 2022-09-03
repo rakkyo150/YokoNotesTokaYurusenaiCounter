@@ -10,7 +10,6 @@ namespace YokoNotesTokaYurusenaiCounter.Configuration
         public virtual bool IsLabelEnable { get; set; } = true;
         public virtual string LabelName { get; set; } = "Yurusenai Counter";
         public virtual bool IsIconEnable { get; set; } = true;
-        public virtual string YokoNoteMissIcon { get; set; } = "🤔";
         public virtual string BombSlashIcon { get; set; } = "💣";
         public virtual CounterTypeEnum CounterType { get; set; } = CounterTypeEnum.Both;
         public virtual bool SeparateSaber { get; set; } = true;

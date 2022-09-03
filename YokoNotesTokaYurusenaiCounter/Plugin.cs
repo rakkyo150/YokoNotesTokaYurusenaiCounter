@@ -1,7 +1,9 @@
 ﻿using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
+using SiraUtil.Zenject;
 using YokoNotesTokaYurusenaiCounter.Configuration;
+using YokoNotesTokaYurusenaiCounter.Installers;
 using IPALogger = IPA.Logging.Logger;
 
 namespace YokoNotesTokaYurusenaiCounter
@@ -18,11 +20,13 @@ namespace YokoNotesTokaYurusenaiCounter
         /// [Init] methods that use a Constructor or called before regular methods like InitWithConfig.
         /// Only use [Init] with one Constructor.
         /// </summary>
-        public void Init(IPALogger logger, Config config)
+        public void Init(IPALogger logger, Config config,Zenjector zenjector)
         {
             Instance = this;
             Log = logger;
             PluginConfig.Instance = config.Generated<PluginConfig>();
+            zenjector.Install<AppInstaller>(Location.App);
+            zenjector.Install<GameInstaller>(Location.GameCore);
             Log.Info("YokoNotesTokaYurusenaiCounter initialized.");
         }
 
