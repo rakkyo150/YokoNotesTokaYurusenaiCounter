@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace YokoNotesTokaYurusenaiCounter.UI
@@ -35,7 +31,7 @@ namespace YokoNotesTokaYurusenaiCounter.UI
                 byte[] data = new byte[stream.Length];
                 stream.Read(data, 0, (int)stream.Length);
                 Texture2D tex = new Texture2D(2, 2);
-                
+
                 if (!tex.LoadImage(data)) return null;
 
                 Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0, 0), 100);

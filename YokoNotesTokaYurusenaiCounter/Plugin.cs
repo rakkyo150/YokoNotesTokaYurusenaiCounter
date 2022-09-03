@@ -20,7 +20,7 @@ namespace YokoNotesTokaYurusenaiCounter
         /// [Init] methods that use a Constructor or called before regular methods like InitWithConfig.
         /// Only use [Init] with one Constructor.
         /// </summary>
-        public void Init(IPALogger logger, Config config,Zenjector zenjector)
+        public void Init(IPALogger logger, Config config, Zenjector zenjector)
         {
             Instance = this;
             Log = logger;

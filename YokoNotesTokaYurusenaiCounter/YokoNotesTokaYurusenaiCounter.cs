@@ -15,7 +15,7 @@ namespace YokoNotesTokaYurusenaiCounter
     {
         private ImageViewSetter _imageViewSetter;
         private readonly DiContainer _container;
-        
+
         private readonly Vector3 labelOffset;
 
         private TMP_Text counter;
@@ -35,7 +35,7 @@ namespace YokoNotesTokaYurusenaiCounter
         public YokoNotesTokaYurusenaiCounter(DiContainer diContainer)
         {
             _container = diContainer;
-            
+
             labelOffset = new Vector3(
                 PluginConfig.Instance.OffsetX, PluginConfig.Instance.OffsetY, PluginConfig.Instance.OffsetZ
                 );
@@ -98,7 +98,7 @@ namespace YokoNotesTokaYurusenaiCounter
 
             UpdateText();
 
-            if (IsYokoNoteIconDisabled()) return;           
+            if (IsYokoNoteIconDisabled()) return;
             ConfirmNumberOfDigit();
         }
 
@@ -110,7 +110,7 @@ namespace YokoNotesTokaYurusenaiCounter
 
             UpdateText();
 
-            if(IsYokoNoteIconDisabled()) return;          
+            if (IsYokoNoteIconDisabled()) return;
             ConfirmNumberOfDigit();
         }
 
@@ -118,7 +118,7 @@ namespace YokoNotesTokaYurusenaiCounter
         {
             int newNumberOfDigit;
             int numberOfMove;
-            
+
             if (PluginConfig.Instance.SeparateSaber)
             {
                 newNumberOfDigit = (int)Math.Log10(updatedYurusenaiNoteMiss.LeftCount()) + (int)Math.Log10(updatedYurusenaiNoteMiss.RightCount()) + 2;
@@ -131,12 +131,12 @@ namespace YokoNotesTokaYurusenaiCounter
             if (updatedNumberOfDigitForNoteImage >= newNumberOfDigit) return;
 
             numberOfMove = newNumberOfDigit - updatedNumberOfDigitForNoteImage;
-            
+
             foreach (var _ in Enumerable.Range(1, numberOfMove))
             {
                 _imageViewSetter.MoveLeft();
             }
-            
+
             updatedNumberOfDigitForNoteImage = newNumberOfDigit;
         }
 

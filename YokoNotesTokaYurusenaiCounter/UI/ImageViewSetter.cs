@@ -1,9 +1,4 @@
 ﻿using HMUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using YokoNotesTokaYurusenaiCounter.Configuration;
@@ -11,7 +6,7 @@ using Zenject;
 
 namespace YokoNotesTokaYurusenaiCounter.UI
 {
-    public class ImageViewSetter:MonoBehaviour
+    public class ImageViewSetter : MonoBehaviour
     {
         private AssetLoader _assetLoader;
 
@@ -38,7 +33,7 @@ namespace YokoNotesTokaYurusenaiCounter.UI
         public void SetTMPTransform(Transform tMPTransform)
         {
             yokoNote.transform.SetParent(tMPTransform, false);
-            yokoNote.transform.position = yokoNote.transform.position + (Vector3.down * 0.15f) ;
+            yokoNote.transform.position = yokoNote.transform.position + (Vector3.down * 0.15f);
 
             if (PluginConfig.Instance.SeparateSaber)
             {
