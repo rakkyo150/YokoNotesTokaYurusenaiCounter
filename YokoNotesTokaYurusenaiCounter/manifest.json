@@ -24,7 +24,7 @@
             "BSML": {
                 "Resource": "YokoNotesTokaYurusenaiCounter.Views.Setting.bsml",
                 "Host": "YokoNotesTokaYurusenaiCounter.Views.SettingController",
-                "Icon": "YokoNotesTokaYurusenaiCounter.Images.yoko.png"
+                "Icon": "YokoNotesTokaYurusenaiCounter.Resources.yoko.png"
             }
         }
     }

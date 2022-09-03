@@ -13,7 +13,7 @@ namespace YokoNotesTokaYurusenaiCounter.UI
 
         public AssetLoader()
         {
-            yokoNotesWithVerticalSlash = LoadSpriteFromResource("YokoNotesTokaYurusenaiCounter.Images.yoko.png");
+            yokoNotesWithVerticalSlash = LoadSpriteFromResource("YokoNotesTokaYurusenaiCounter.Resources.yoko.png");
 
             mat_UINoGlow = new Material(Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlow").First())
             {
