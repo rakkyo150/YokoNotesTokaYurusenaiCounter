@@ -16,6 +16,7 @@
             "Name": "Yoko Notes Toka Yurusenai Counter",
             "Description": "Shows the Miss Count on Horizon Direction Notes or Bomb Slash",
             "CounterLocation": "YokoNotesTokaYurusenaiCounter.YokoNotesTokaYurusenaiCounter",
+            "MultiplayerReady": true,
             "ConfigDefaults": {
                 "Enabled": true,
                 "Position": "AboveCombo",
