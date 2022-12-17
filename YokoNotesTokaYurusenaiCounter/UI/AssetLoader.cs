@@ -8,12 +8,14 @@ namespace YokoNotesTokaYurusenaiCounter.UI
     public class AssetLoader
     {
         internal Sprite yokoNotesWithVerticalSlash { get; }
+        internal Sprite irasutoyaSquat { get; }
 
         internal Material mat_UINoGlow { get; }
 
         public AssetLoader()
         {
             yokoNotesWithVerticalSlash = LoadSpriteFromResource("YokoNotesTokaYurusenaiCounter.Resources.yoko.png");
+            irasutoyaSquat = LoadSpriteFromResource("YokoNotesTokaYurusenaiCounter.Resources.squat.png");
 
             mat_UINoGlow = new Material(Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlow").First())
             {

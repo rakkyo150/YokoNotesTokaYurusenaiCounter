@@ -5,13 +5,13 @@ namespace YokoNotesTokaYurusenaiCounter
     internal class YurusenaiNoteMiss : IYurusenai
     {
         readonly private int bothCount;
-        public int BothCount() => bothCount;
+        public string BothCount() => bothCount.ToString();
 
         readonly private int leftCount;
-        public int LeftCount() => leftCount;
+        public string LeftCount() => leftCount.ToString();
 
         readonly private int rightCount;
-        public int RightCount() => rightCount;
+        public string RightCount() => rightCount.ToString();
 
         internal YurusenaiNoteMiss(int both, int left, int right)
         {
@@ -28,17 +28,17 @@ namespace YokoNotesTokaYurusenaiCounter
             rightCount = right;
         }
 
-        public IYurusenai UpdateBothHand()
+        public IYurusenai UpdateBoth()
         {
             return new YurusenaiNoteMiss(bothCount + 1, leftCount, rightCount);
         }
 
-        public IYurusenai UpdateLeftHand()
+        public IYurusenai UpdateLeft()
         {
             return new YurusenaiNoteMiss(bothCount, leftCount + 1, rightCount);
         }
 
-        public IYurusenai UpdateRightHand()
+        public IYurusenai UpdateRight()
         {
             return new YurusenaiNoteMiss(bothCount, leftCount, rightCount + 1);
         }

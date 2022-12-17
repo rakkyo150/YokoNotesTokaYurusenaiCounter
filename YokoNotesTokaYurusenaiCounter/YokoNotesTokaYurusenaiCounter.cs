@@ -22,15 +22,23 @@ namespace YokoNotesTokaYurusenaiCounter
 
         private readonly int defaultNoteCount = 0;
         private readonly int defaultBombCount = 0;
+        private readonly int defaultObstacleCount = 0;
 
         private readonly IYurusenai InitializedYurusenaiNoteMiss;
         private readonly IYurusenai InitializedYurusenaiBombSlash;
+        private readonly YurusenaiObstacle InitializedYurusenaiObstacle;
 
         private IYurusenai updatedYurusenaiNoteMiss;
         private IYurusenai updatedYurusenaiBombSlash;
+        private YurusenaiObstacle updatedYurusenaiObstacle;
 
         private readonly int initialNumberOfDigitForNoteImage;
         private int updatedNumberOfDigitForNoteImage;
+
+        private readonly int initialNumberOfDigitForSquatImage;
+        private int updatedNumberOfDigitForSquatImage;
+
+        private ObstacleCounterUpdater obstacleDamageCount;
 
         public YokoNotesTokaYurusenaiCounter(DiContainer diContainer)
         {
@@ -42,6 +50,7 @@ namespace YokoNotesTokaYurusenaiCounter
 
             InitializedYurusenaiNoteMiss = new YurusenaiNoteMiss(defaultNoteCount, defaultNoteCount, defaultNoteCount);
             InitializedYurusenaiBombSlash = new YurusenaiBombSlash(defaultBombCount, defaultBombCount, defaultBombCount);
+            InitializedYurusenaiObstacle = new YurusenaiObstacle(defaultObstacleCount, defaultObstacleCount, defaultObstacleCount);
 
             if (PluginConfig.Instance.SeparateSaber)
             {
@@ -51,14 +60,28 @@ namespace YokoNotesTokaYurusenaiCounter
             {
                 initialNumberOfDigitForNoteImage = 1;
             }
+
+            if(PluginConfig.Instance.ObstacleTimeType == ObstacleTimeTypeEnum.Frame ||
+                (PluginConfig.Instance.ObstacleTimeType == ObstacleTimeTypeEnum.Second 
+                && PluginConfig.Instance.ObstacleSecondPrecision == 0)
+                )
+            {
+                initialNumberOfDigitForSquatImage = 2;
+            }
+            else
+            {
+                initialNumberOfDigitForSquatImage = 2 + PluginConfig.Instance.ObstacleSecondPrecision;
+            }
         }
 
         public override void CounterInit()
         {
             updatedYurusenaiNoteMiss = InitializedYurusenaiNoteMiss;
             updatedYurusenaiBombSlash = InitializedYurusenaiBombSlash;
+            updatedYurusenaiObstacle = InitializedYurusenaiObstacle;
 
             updatedNumberOfDigitForNoteImage = initialNumberOfDigitForNoteImage;
+            updatedNumberOfDigitForSquatImage = initialNumberOfDigitForSquatImage;
 
             if (!IsYokoNoteIconDisabled())
             {
@@ -66,6 +89,8 @@ namespace YokoNotesTokaYurusenaiCounter
                 _imageViewSetter = _container.InstantiateComponentOnNewGameObject<ImageViewSetter>("yokoNoteImageView");
                 _imageViewSetter?.Initialize();
             }
+
+            obstacleDamageCount = _container.InstantiateComponentOnNewGameObject<ObstacleCounterUpdater>("obstacleDamageCount");
 
             CreateLabel();
             CreateCounter();
@@ -99,7 +124,7 @@ namespace YokoNotesTokaYurusenaiCounter
             UpdateText();
 
             if (IsYokoNoteIconDisabled()) return;
-            ConfirmNumberOfDigit();
+            ConfirmNumberOfDigitForYokoNote();
         }
 
         public void OnNoteMiss(NoteData data)
@@ -111,21 +136,21 @@ namespace YokoNotesTokaYurusenaiCounter
             UpdateText();
 
             if (IsYokoNoteIconDisabled()) return;
-            ConfirmNumberOfDigit();
+            ConfirmNumberOfDigitForYokoNote();
         }
 
-        private void ConfirmNumberOfDigit()
+        private void ConfirmNumberOfDigitForYokoNote()
         {
             int newNumberOfDigit;
             int numberOfMove;
 
             if (PluginConfig.Instance.SeparateSaber)
             {
-                newNumberOfDigit = (int)Math.Log10(updatedYurusenaiNoteMiss.LeftCount()) + (int)Math.Log10(updatedYurusenaiNoteMiss.RightCount()) + 2;
+                newNumberOfDigit = (int)Math.Log10(int.Parse(updatedYurusenaiNoteMiss.LeftCount())) + (int)Math.Log10(int.Parse(updatedYurusenaiNoteMiss.RightCount())) + 2;
             }
             else
             {
-                newNumberOfDigit = (int)Math.Log10(updatedYurusenaiNoteMiss.BothCount()) + 1;
+                newNumberOfDigit = (int)Math.Log10(int.Parse(updatedYurusenaiNoteMiss.BothCount())) + 1;
             }
 
             if (updatedNumberOfDigitForNoteImage >= newNumberOfDigit) return;
@@ -134,40 +159,86 @@ namespace YokoNotesTokaYurusenaiCounter
 
             foreach (var _ in Enumerable.Range(1, numberOfMove))
             {
-                _imageViewSetter.MoveLeft();
+                _imageViewSetter.MoveYokoNoteLeft();
             }
 
             updatedNumberOfDigitForNoteImage = newNumberOfDigit;
         }
 
-        public override void CounterDestroy() { }
+        private void ConfirmNumberOfDigitForSquat()
+        {
+            int newNumberOfDigit;
+            int numberOfMove;
+
+            newNumberOfDigit = (int)Math.Log10(int.Parse(updatedYurusenaiObstacle.LeftCount())) 
+                + (int)Math.Log10(float.Parse(updatedYurusenaiObstacle.RightCount().TrimEnd('s','f'))) 
+                + initialNumberOfDigitForSquatImage;
+
+            if (updatedNumberOfDigitForSquatImage >= newNumberOfDigit) return;
+
+            numberOfMove = newNumberOfDigit - updatedNumberOfDigitForSquatImage;
+
+            foreach (var _ in Enumerable.Range(1, numberOfMove))
+            {
+                _imageViewSetter.MoveSquatLeft();
+            }
+
+            updatedNumberOfDigitForSquatImage = newNumberOfDigit;
+        }
+
+        public override void CounterDestroy() 
+        {
+            updatedYurusenaiObstacle = null;
+        }
 
         private void UpdateYurusenai(ref IYurusenai yurusenai, NoteData data)
         {
-            yurusenai = yurusenai.UpdateBothHand();
+            yurusenai = yurusenai.UpdateBoth();
 
             if (data.colorType == ColorType.ColorA)
             {
-                yurusenai = yurusenai.UpdateLeftHand();
+                yurusenai = yurusenai.UpdateLeft();
             }
             else if (data.colorType == ColorType.ColorB)
             {
-                yurusenai = yurusenai.UpdateRightHand();
+                yurusenai = yurusenai.UpdateRight();
             }
         }
 
         private void UpdateYurusenai(ref IYurusenai yurusenai, NoteCutInfo info)
         {
-            yurusenai = yurusenai.UpdateBothHand();
+            yurusenai = yurusenai.UpdateBoth();
 
             if (info.saberType == SaberType.SaberA)
             {
-                yurusenai = yurusenai.UpdateLeftHand();
+                yurusenai = yurusenai.UpdateLeft();
                 return;
             }
 
-            yurusenai = yurusenai.UpdateRightHand();
+            yurusenai = yurusenai.UpdateRight();
         }
+
+        internal void AddObstacleDamageCount()
+        {
+            updatedYurusenaiObstacle = (YurusenaiObstacle)updatedYurusenaiObstacle.UpdateLeft();
+            UpdateText();
+            ConfirmNumberOfDigitForSquat();
+        }
+
+        internal void AddObstacleDamageDuration(float time)
+        {
+            updatedYurusenaiObstacle = (YurusenaiObstacle)updatedYurusenaiObstacle.UpdateRight(time);
+            UpdateText();
+            ConfirmNumberOfDigitForSquat();
+        }
+
+        internal void AddObstacleDamageDuration()
+        {
+            updatedYurusenaiObstacle = (YurusenaiObstacle)updatedYurusenaiObstacle.UpdateRight();
+            UpdateText();
+            ConfirmNumberOfDigitForSquat();
+        }
+
 
         private void CreateLabel()
         {
@@ -190,6 +261,7 @@ namespace YokoNotesTokaYurusenaiCounter
 
             if (IsYokoNoteIconDisabled()) return;
             _imageViewSetter?.SetTMPTransform(counter.transform);
+            _imageViewSetter?.SetTMPTransform2(counter.transform);
         }
 
         private void UpdateText() => counter.text = MakeCountText();
@@ -200,7 +272,8 @@ namespace YokoNotesTokaYurusenaiCounter
             {
                 case CounterTypeEnum.Both:
                     return $"{YurusenaiText(updatedYurusenaiNoteMiss, "      ")}" +
-                        $"\n{YurusenaiText(updatedYurusenaiBombSlash, PluginConfig.Instance.BombSlashIcon)}";
+                        $"\n{YurusenaiText(updatedYurusenaiBombSlash, PluginConfig.Instance.BombSlashIcon)}" +
+                        $"\n{YurusenaiText(updatedYurusenaiObstacle, "      ")}";
                 case CounterTypeEnum.YokoNotesOnly:
                     return YurusenaiText(updatedYurusenaiNoteMiss, "      ");
                 default:

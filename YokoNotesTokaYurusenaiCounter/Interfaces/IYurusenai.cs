@@ -2,14 +2,14 @@
 {
     internal interface IYurusenai
     {
-        int BothCount();
-        int LeftCount();
-        int RightCount();
+        string BothCount();
+        string LeftCount();
+        string RightCount();
 
-        IYurusenai UpdateBothHand();
+        IYurusenai UpdateBoth();
 
-        IYurusenai UpdateLeftHand();
+        IYurusenai UpdateLeft();
 
-        IYurusenai UpdateRightHand();
+        IYurusenai UpdateRight();
     }
 }

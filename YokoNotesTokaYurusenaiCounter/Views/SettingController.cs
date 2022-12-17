@@ -1,7 +1,10 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.ViewControllers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Permissions;
 using YokoNotesTokaYurusenaiCounter.Configuration;
 
 namespace YokoNotesTokaYurusenaiCounter.Views
@@ -39,9 +42,32 @@ namespace YokoNotesTokaYurusenaiCounter.Views
             }
         }
 
-        [UIValue("type")]
-        public List<object> type = Enum.GetNames(typeof(CounterTypeEnum)).ToList<object>();
+        [UIValue("counter-type")]
+        public List<object> counterType = Enum.GetNames(typeof(CounterTypeEnum)).ToList<object>();
 
+        [UIValue("ObstacleTimeType")]
+        public string ObstacleTime
+        {
+            get => PluginConfig.Instance.ObstacleTimeType.ToString();
+            set
+            {
+                SetObstacleTimeType(value);
+            }
+        }
+
+        [UIValue("obstacle-time-type")]
+        public List<object> obstacleTimeType = Enum.GetNames(typeof(ObstacleTimeTypeEnum)).ToList<object>();
+
+        [UIValue("ObstacleSecondPrecision")]
+        public int ObstacleSecondPrecision
+        {
+            get => PluginConfig.Instance.ObstacleSecondPrecision;
+            set
+            {
+                PluginConfig.Instance.ObstacleSecondPrecision = value;
+            }
+        }
+        
         [UIValue("SeparateSaber")]
         public bool SeparateSaber
         {
@@ -91,6 +117,17 @@ namespace YokoNotesTokaYurusenaiCounter.Views
             }
 
             PluginConfig.Instance.CounterType = CounterTypeEnum.Both;
+        }
+
+        private static void SetObstacleTimeType(string value)
+        {
+            if (Enum.TryParse(value, out ObstacleTimeTypeEnum result))
+            {
+                PluginConfig.Instance.ObstacleTimeType = result;
+                return;
+            }
+
+            PluginConfig.Instance.ObstacleTimeType = ObstacleTimeTypeEnum.Second;
         }
     }
 }

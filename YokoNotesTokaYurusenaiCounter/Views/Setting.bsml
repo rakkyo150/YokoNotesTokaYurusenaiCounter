@@ -1,7 +1,9 @@
 ﻿<vertical xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd' spacing='1' horizontal-fit='PreferredSize' vertical-fit='PreferredSize'>
 	<checkbox-setting text="Is Label Enable" value="IsLabelEnable"  apply-on-change="true"></checkbox-setting>
 	<checkbox-setting text="Is Icon Enable" value="IsIconEnable"  apply-on-change="true"></checkbox-setting>
-	<dropdown-list-setting text="Counter Type" value="CounterType" apply-on-change="true" choices="type"></dropdown-list-setting>
+	<dropdown-list-setting text="Counter Type" value="CounterType" apply-on-change="true" choices="counter-type"></dropdown-list-setting>
+	<dropdown-list-setting text="Obstacle Time Type" value="ObstacleTimeType" apply-on-change="true" choices="obstacle-time-type"></dropdown-list-setting>
+	<increment-setting text="Obstacle Second Precision" value="ObstacleSecondPrecision"  increment="1" min="0" apply-on-change="true"></increment-setting>
 	<checkbox-setting text="Separate Saber Dependence" value="SeparateSaber"  apply-on-change="true"></checkbox-setting>
 	<increment-setting text="Offset X" value="OffsetX"  increment="0.1" apply-on-change="true"></increment-setting>
 	<increment-setting text="Offset Y" value="OffsetY"  increment="0.1" apply-on-change="true"></increment-setting>

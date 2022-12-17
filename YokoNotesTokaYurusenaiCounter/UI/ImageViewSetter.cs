@@ -11,6 +11,7 @@ namespace YokoNotesTokaYurusenaiCounter.UI
         private AssetLoader _assetLoader;
 
         private ImageView yokoNote;
+        private ImageView squat;
 
         // InstantiateするときはInjectアトリビュートつけるコンストラクタじゃないと動かない
         [Inject]
@@ -22,16 +23,27 @@ namespace YokoNotesTokaYurusenaiCounter.UI
         public void Initialize()
         {
             yokoNote = new GameObject("yokoNoteImageViewSetter").AddComponent<ImageView>();
-            yokoNote.transform.SetParent(transform, false);
-            yokoNote.rectTransform.localScale = Vector3.one * 0.045f;
-            yokoNote.rectTransform.localPosition = Vector3.zero;
             yokoNote.sprite = _assetLoader.yokoNotesWithVerticalSlash;
-            yokoNote.type = Image.Type.Simple;
-            yokoNote.material = _assetLoader.mat_UINoGlow;
+            squat = new GameObject("squatImageViewSetter").AddComponent<ImageView>();
+            squat.sprite = _assetLoader.irasutoyaSquat;
+
+            yokoNote = SetData(yokoNote);
+            squat = SetData(squat);
+        }
+
+        private ImageView SetData(ImageView imageView)
+        {            
+            imageView.transform.SetParent(transform, false);
+            imageView.rectTransform.localScale = Vector3.one * 0.045f;
+            imageView.type = Image.Type.Simple;
+            imageView.material = _assetLoader.mat_UINoGlow;
+
+            return imageView;
         }
 
         public void SetTMPTransform(Transform tMPTransform)
         {
+            // メソッド化必須
             yokoNote.transform.SetParent(tMPTransform, false);
             yokoNote.transform.position = yokoNote.transform.position + (Vector3.down * 0.15f);
 
@@ -44,9 +56,31 @@ namespace YokoNotesTokaYurusenaiCounter.UI
             yokoNote.transform.position = yokoNote.transform.position + (Vector3.left * 0.15f);
         }
 
-        public void MoveLeft()
+        public void SetTMPTransform2(Transform tMPTransform)
+        {
+            squat.transform.SetParent(tMPTransform, false);
+            squat.transform.position = squat.transform.position + (Vector3.down * 1.1f);
+
+            squat.transform.position = squat.transform.position + (Vector3.left * 0.35f);
+            if (PluginConfig.Instance.ObstacleTimeType != ObstacleTimeTypeEnum.Second) return;
+
+            // 小数点のコンマの分
+            if (PluginConfig.Instance.ObstacleSecondPrecision > 0) MoveSquatLeft();
+            
+            for (int i = 0; i < PluginConfig.Instance.ObstacleSecondPrecision; i++)
+            {
+                MoveSquatLeft();
+            }
+        }
+
+        public void MoveYokoNoteLeft()
         {
             yokoNote.transform.position = yokoNote.transform.position + (Vector3.left * 0.05f);
+        }
+
+        public void MoveSquatLeft()
+        {
+            squat.transform.position = squat.transform.position + (Vector3.left * 0.05f);
         }
 
         public void OnDestroy()
