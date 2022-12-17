@@ -8,7 +8,7 @@ Counters+が必要です。<br>
 |:---|:---|
 |IsLabelEnable|ラベルの表示非表示を選択できます|
 |LabelName|ラベルの名前を変更できます(jsonを直接してください)|
-|YokoNoteMissIcon|横ノーツミスのアイコンを変更できます(jsonを直接してください)|
+|~~YokoNoteMissIcon~~|~~横ノーツミスのアイコンを変更できます(jsonを直接してください)~~|
 |BombSlashIcon|ボムミスのアイコンを変更できます(jsonを直接してください)|
 |CounterType|カウンターの種類を選べます|
 |IsObstacleTimeEnable|障害物に頭が接触した時間を表示するか選べます|
