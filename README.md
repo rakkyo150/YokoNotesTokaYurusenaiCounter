@@ -1,5 +1,5 @@
 # YokoNotesYurusenaiCounter
-横ノーツでミスした回数やボムを切った回数を表示します。<br>
+横ノーツでミスした回数、ボムを切った回数と障害物に頭が接触した回数や時間を表示します。<br>
 Counters+が必要です。<br>
 ![yurusenai](https://user-images.githubusercontent.com/86054813/172263444-a076ca25-ca5e-4d12-acaf-5b994c91d0c9.png)
 
@@ -11,6 +11,9 @@ Counters+が必要です。<br>
 |YokoNoteMissIcon|横ノーツミスのアイコンを変更できます(jsonを直接してください)|
 |BombSlashIcon|ボムミスのアイコンを変更できます(jsonを直接してください)|
 |CounterType|カウンターの種類を選べます|
+|IsObstacleTimeEnable|障害物に頭が接触した時間を表示するか選べます|
+|ObstacleTimeType|障害物に頭が接触した時間の単位を変えることができます|
+|ObstacleSecondPrecision|障害物に頭が接触した時間を秒で表す場合の小数点以下の桁数を変えることができます|
 |SeparateSaber|カウンターの表示をセイバーで分けるかどうか選択できます|
 |OffsetX|X軸方向のカウンターの位置を調整できます|
 |OffsetY|Y軸方向のカウンターの位置を調整できます|
