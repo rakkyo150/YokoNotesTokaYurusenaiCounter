@@ -132,6 +132,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfirmorOfNumberOfDigit.cs" />
     <Compile Include="CounterTypeEnum.cs" />
     <Compile Include="ObstacleDurationTypeEnum.cs" />
     <Compile Include="Installers\AppInstaller.cs" />

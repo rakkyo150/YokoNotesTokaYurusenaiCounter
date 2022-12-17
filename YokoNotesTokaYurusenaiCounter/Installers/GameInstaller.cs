@@ -7,8 +7,9 @@ namespace YokoNotesTokaYurusenaiCounter.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<ImageViewSetter>().AsSingle();
+            Container.Bind<ImageViewSetter>().FromNewComponentOnNewGameObject().AsSingle();
             Container.Bind<ObstacleCounterUpdater>().AsSingle();
+            Container.Bind<ConfirmorOfNumberOfDigit>().AsSingle();
         }
     }
 }

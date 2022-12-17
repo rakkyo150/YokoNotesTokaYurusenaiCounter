@@ -1,4 +1,5 @@
 ﻿using HMUI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using YokoNotesTokaYurusenaiCounter.Configuration;
@@ -97,6 +98,21 @@ namespace YokoNotesTokaYurusenaiCounter.UI
             {
                 MoveSquatLeft();
             }
+        }
+
+        
+        internal void CreateIcons(TMP_Text counter)
+        {
+            if (!PluginConfig.Instance.IsYokoNoteIconDisabled())
+            {
+                InitializeYokoNoteIcon();
+                SetTMPTransformForYokoNote(counter.transform);
+            }
+
+            if (PluginConfig.Instance.IsObstacleIconDisabled()) return;
+
+            InitializeSquatIcon();
+            SetTMPTransformForObstacle(counter.transform);
         }
 
         public void MoveYokoNoteLeft()

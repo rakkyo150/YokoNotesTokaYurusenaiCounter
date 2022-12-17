@@ -19,5 +19,30 @@ namespace YokoNotesTokaYurusenaiCounter.Configuration
         public virtual float OffsetX { get; set; } = 0; // Must be 'virtual' if you want BSIPA to detect a value change and save the config automatically.
         public virtual float OffsetY { get; set; } = 0;
         public virtual float OffsetZ { get; set; } = 0;
+
+        internal bool IsTwoNumberInInitialObstacleCounter()
+        {
+            return Instance.IsObstacleTimeEnable &&
+                (Instance.ObstacleTimeType == ObstacleTimeTypeEnum.Frame ||
+                (Instance.ObstacleTimeType == ObstacleTimeTypeEnum.Second 
+                && Instance.ObstacleSecondPrecision == 0)
+                );
+        }
+
+        internal bool IsYokoNoteIconDisabled()
+        {
+            return !Instance.IsIconEnable
+                || Instance.CounterType == CounterTypeEnum.BombsOnly
+                || Instance.CounterType == CounterTypeEnum.ObstaclesOnly
+                || Instance.CounterType == CounterTypeEnum.BombsAndObstacles;
+        }
+
+        internal bool IsObstacleIconDisabled()
+        {
+            return !Instance.IsIconEnable
+                || Instance.CounterType == CounterTypeEnum.BombsOnly
+                || Instance.CounterType == CounterTypeEnum.YokoNotesOnly
+                || Instance.CounterType == CounterTypeEnum.YokoNotesAndBombs;
+        }
     }
 }
