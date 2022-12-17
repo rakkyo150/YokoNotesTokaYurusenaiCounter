@@ -20,14 +20,19 @@ namespace YokoNotesTokaYurusenaiCounter.UI
             _assetLoader = assetLoader;
         }
 
-        public void Initialize()
+        public void InitializeYokoNoteIcon()
         {
             yokoNote = new GameObject("yokoNoteImageViewSetter").AddComponent<ImageView>();
             yokoNote.sprite = _assetLoader.yokoNotesWithVerticalSlash;
+
+            yokoNote = SetData(yokoNote);
+        }
+
+        public void InitializeSquatIcon()
+        {
             squat = new GameObject("squatImageViewSetter").AddComponent<ImageView>();
             squat.sprite = _assetLoader.irasutoyaSquat;
 
-            yokoNote = SetData(yokoNote);
             squat = SetData(squat);
         }
 
@@ -41,7 +46,7 @@ namespace YokoNotesTokaYurusenaiCounter.UI
             return imageView;
         }
 
-        public void SetTMPTransform(Transform tMPTransform)
+        public void SetTMPTransformForYokoNote(Transform tMPTransform)
         {
             // メソッド化必須
             yokoNote.transform.SetParent(tMPTransform, false);
@@ -56,12 +61,33 @@ namespace YokoNotesTokaYurusenaiCounter.UI
             yokoNote.transform.position = yokoNote.transform.position + (Vector3.left * 0.15f);
         }
 
-        public void SetTMPTransform2(Transform tMPTransform)
+        public void SetTMPTransformForObstacle(Transform tMPTransform)
         {
             squat.transform.SetParent(tMPTransform, false);
-            squat.transform.position = squat.transform.position + (Vector3.down * 1.1f);
+            
+            if(PluginConfig.Instance.CounterType == CounterTypeEnum.All)
+            {
+                squat.transform.position = squat.transform.position + (Vector3.down * 1.1f);
+            }
+            else if(PluginConfig.Instance.CounterType == CounterTypeEnum.YokoNotesAndObstacles
+                    || PluginConfig.Instance.CounterType == CounterTypeEnum.BombsAndObstacles)
+            {
+                squat.transform.position = squat.transform.position + (Vector3.down * 0.625f);
+            }
+            else
+            {
+                squat.transform.position = squat.transform.position + (Vector3.down * 0.15f);
+            }
 
-            squat.transform.position = squat.transform.position + (Vector3.left * 0.35f);
+
+            if (!PluginConfig.Instance.IsObstacleTimeEnable)
+            {
+                squat.transform.position = squat.transform.position + (Vector3.left * 0.1f);
+                return ;
+            }
+            
+            squat.transform.position = squat.transform.position + (Vector3.left * 0.3f);
+
             if (PluginConfig.Instance.ObstacleTimeType != ObstacleTimeTypeEnum.Second) return;
 
             // 小数点のコンマの分
@@ -80,7 +106,7 @@ namespace YokoNotesTokaYurusenaiCounter.UI
 
         public void MoveSquatLeft()
         {
-            squat.transform.position = squat.transform.position + (Vector3.left * 0.05f);
+            squat.transform.position = squat.transform.position + (Vector3.left * 0.08f);
         }
 
         public void OnDestroy()

@@ -45,6 +45,16 @@ namespace YokoNotesTokaYurusenaiCounter.Views
         [UIValue("counter-type")]
         public List<object> counterType = Enum.GetNames(typeof(CounterTypeEnum)).ToList<object>();
 
+        [UIValue("IsObstacleTimeEnable")]
+        public bool IsObstacleTimeEnable
+        {
+            get => PluginConfig.Instance.IsObstacleTimeEnable;
+            set
+            {
+                PluginConfig.Instance.IsObstacleTimeEnable = value;
+            }
+        }
+        
         [UIValue("ObstacleTimeType")]
         public string ObstacleTime
         {
@@ -116,7 +126,7 @@ namespace YokoNotesTokaYurusenaiCounter.Views
                 return;
             }
 
-            PluginConfig.Instance.CounterType = CounterTypeEnum.Both;
+            PluginConfig.Instance.CounterType = CounterTypeEnum.All;
         }
 
         private static void SetObstacleTimeType(string value)

@@ -2,6 +2,7 @@
 	<checkbox-setting text="Is Label Enable" value="IsLabelEnable"  apply-on-change="true"></checkbox-setting>
 	<checkbox-setting text="Is Icon Enable" value="IsIconEnable"  apply-on-change="true"></checkbox-setting>
 	<dropdown-list-setting text="Counter Type" value="CounterType" apply-on-change="true" choices="counter-type"></dropdown-list-setting>
+	<checkbox-setting text="Is Obstacle Time Enable" value="IsObstacleTimeEnable"  apply-on-change="true"></checkbox-setting>
 	<dropdown-list-setting text="Obstacle Time Type" value="ObstacleTimeType" apply-on-change="true" choices="obstacle-time-type"></dropdown-list-setting>
 	<increment-setting text="Obstacle Second Precision" value="ObstacleSecondPrecision" integer-only="true" min="0" increment="1" apply-on-change="true"></increment-setting>
 	<checkbox-setting text="Separate Saber Dependence" value="SeparateSaber" apply-on-change="true"></checkbox-setting>

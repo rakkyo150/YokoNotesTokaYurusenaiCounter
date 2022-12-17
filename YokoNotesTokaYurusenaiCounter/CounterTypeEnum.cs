@@ -2,8 +2,12 @@
 {
     public enum CounterTypeEnum
     {
-        Both,
+        All,
+        YokoNotesAndBombs,
+        YokoNotesAndObstacles,
+        BombsAndObstacles,
         YokoNotesOnly,
-        BombsOnly
+        BombsOnly,
+        ObstaclesOnly
     }
 }

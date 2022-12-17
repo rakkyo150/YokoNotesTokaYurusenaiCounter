@@ -11,7 +11,8 @@ namespace YokoNotesTokaYurusenaiCounter.Configuration
         public virtual string LabelName { get; set; } = "Yurusenai Counter";
         public virtual bool IsIconEnable { get; set; } = true;
         public virtual string BombSlashIcon { get; set; } = "💣";
-        public virtual CounterTypeEnum CounterType { get; set; } = CounterTypeEnum.Both;
+        public virtual CounterTypeEnum CounterType { get; set; } = CounterTypeEnum.All;
+        public virtual bool IsObstacleTimeEnable { get; set; } = true;
         public virtual ObstacleTimeTypeEnum ObstacleTimeType { get; set; }=ObstacleTimeTypeEnum.Second;
         public virtual int ObstacleSecondPrecision { get; set; } = 2;
         public virtual bool SeparateSaber { get; set; } = true;
