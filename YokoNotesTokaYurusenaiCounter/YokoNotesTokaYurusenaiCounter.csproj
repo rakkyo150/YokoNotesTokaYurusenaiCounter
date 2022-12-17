@@ -132,23 +132,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfirmorOfNumberOfDigit.cs" />
-    <Compile Include="CounterTypeEnum.cs" />
-    <Compile Include="ObstacleDurationTypeEnum.cs" />
+    <Compile Include="Icon\ConfirmorOfNumberOfDigit.cs" />
+    <Compile Include="TypeEnum\CounterTypeEnum.cs" />
+    <Compile Include="TypeEnum\ObstacleDurationTypeEnum.cs" />
     <Compile Include="Installers\AppInstaller.cs" />
     <Compile Include="Installers\GameInstaller.cs" />
     <Compile Include="Interfaces\IYurusenai.cs" />
     <Compile Include="ObstacleCounterUpdater.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Configuration\PluginConfig.cs" />
-    <Compile Include="UI\AssetLoader.cs" />
-    <Compile Include="UI\ImageViewSetter.cs" />
+    <Compile Include="Icon\AssetLoader.cs" />
+    <Compile Include="Icon\ImageViewSetter.cs" />
     <Compile Include="Views\SettingController.cs" />
     <Compile Include="YokoNotesTokaYurusenaiCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YurusenaiBombSlash.cs" />
-    <Compile Include="YurusenaiNoteMiss.cs" />
-    <Compile Include="YurusenaiObstacle.cs" />
+    <Compile Include="Counters\YurusenaiBombSlash.cs" />
+    <Compile Include="Counters\YurusenaiNoteMiss.cs" />
+    <Compile Include="Counters\YurusenaiObstacle.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
